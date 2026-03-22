@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SHREE HARINI VELU S — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:     #0A0A0F;
+      --bg2:    #111118;
+      --bg3:    #16161F;
+      --gold:   #C9A84C;
+      --gold2:  #E8C87A;
+      --silver: #A8B4C8;
+      --white:  #F5F5F7;
+      --muted:  #6B7280;
+      --border: rgba(201,168,76,0.12);
+      --border2:rgba(255,255,255,0.06);
+      --card:   rgba(17,17,24,0.95);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+
+    .bg-noise{position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:radial-gradient(ellipse 70% 50% at 90% 10%,rgba(201,168,76,0.06) 0%,transparent 60%),
+                 radial-gradient(ellipse 50% 40% at 10% 90%,rgba(201,168,76,0.04) 0%,transparent 60%);}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 80px;height:72px;
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(10,10,15,0.92);backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--border2);}
+    .nav-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;
+      color:var(--white);letter-spacing:1px;}
+    .nav-name span{color:var(--gold);}
+    .nav-links{display:flex;gap:40px;list-style:none;}
+    .nav-links a{color:var(--silver);text-decoration:none;font-size:0.875rem;
+      font-weight:400;letter-spacing:0.5px;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--gold);}
+
+    section{position:relative;z-index:1;}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+      padding:120px 80px 80px;max-width:1300px;margin:0 auto;}
+    .hero-eyebrow{font-size:0.8rem;font-weight:500;color:var(--gold);letter-spacing:4px;
+      text-transform:uppercase;margin-bottom:28px;
+      opacity:0;animation:fadeUp 0.7s 0.2s ease forwards;}
+    .hero-name{font-family:'Playfair Display',serif;
+      font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:1.0;
+      letter-spacing:-1px;margin-bottom:24px;
+      opacity:0;animation:fadeUp 0.7s 0.35s ease forwards;}
+    .hero-name .outline{color:transparent;-webkit-text-stroke:1.5px var(--gold);}
+    .hero-tagline{font-size:clamp(1rem,2vw,1.2rem);color:var(--silver);font-weight:300;
+      line-height:1.8;max-width:580px;margin-bottom:48px;
+      opacity:0;animation:fadeUp 0.7s 0.5s ease forwards;}
+    .hero-tagline strong{color:var(--white);font-weight:500;}
+    .hero-actions{display:flex;gap:16px;flex-wrap:wrap;
+      opacity:0;animation:fadeUp 0.7s 0.65s ease forwards;}
+    .btn-gold{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;
+      border-radius:6px;background:var(--gold);color:var(--bg);font-weight:600;
+      font-size:0.875rem;letter-spacing:0.5px;text-decoration:none;
+      border:1px solid var(--gold);transition:all 0.25s;}
+    .btn-gold:hover{background:var(--gold2);border-color:var(--gold2);
+      transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,168,76,0.25);}
+    .btn-outline{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;
+      border-radius:6px;background:transparent;color:var(--white);font-weight:500;
+      font-size:0.875rem;letter-spacing:0.5px;text-decoration:none;
+      border:1px solid var(--border2);transition:all 0.25s;}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+    .hero-scroll{position:absolute;bottom:50px;left:80px;
+      display:flex;align-items:center;gap:16px;
+      opacity:0;animation:fadeUp 0.7s 0.9s ease forwards;}
+    .scroll-line{width:50px;height:1px;background:var(--border);}
+    .scroll-text{font-size:0.72rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    /* SHARED */
+    .wrap{max-width:1300px;margin:0 auto;padding:100px 80px;}
+    .sec-tag{font-size:0.72rem;font-weight:600;color:var(--gold);
+      letter-spacing:4px;text-transform:uppercase;margin-bottom:14px;}
+    .sec-title{font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,4vw,3rem);font-weight:700;
+      letter-spacing:-0.5px;line-height:1.1;margin-bottom:56px;}
+    .sec-title span{color:var(--gold);}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:80px;align-items:start;}
+    .about-text p{color:var(--silver);line-height:1.9;font-size:1.05rem;
+      font-weight:300;margin-bottom:22px;}
+    .about-text p strong{color:var(--white);font-weight:500;}
+    .about-cards{display:flex;flex-direction:column;gap:14px;}
+    .info-card{background:var(--bg3);border:1px solid var(--border2);
+      border-radius:12px;padding:20px 24px;
+      display:flex;align-items:center;gap:16px;transition:all 0.3s;}
+    .info-card:hover{border-color:var(--border);transform:translateX(6px);}
+    .info-icon{font-size:1.3rem;flex-shrink:0;}
+    .info-label{font-size:0.7rem;color:var(--muted);letter-spacing:1px;
+      text-transform:uppercase;margin-bottom:4px;}
+    .info-value{font-size:0.92rem;font-weight:500;color:var(--white);}
+
+    /* SKILLS */
+    .skills-bg{background:var(--bg2);}
+    .skills-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+    .skill-item{background:var(--bg3);border:1px solid var(--border2);
+      border-radius:12px;padding:26px 18px;text-align:center;transition:all 0.3s;}
+    .skill-item:hover{border-color:var(--border);transform:translateY(-6px);
+      box-shadow:0 20px 40px rgba(0,0,0,0.3);}
+    .skill-item:hover .skill-name{color:var(--gold);}
+    .skill-emoji{font-size:1.8rem;margin-bottom:10px;}
+    .skill-name{font-size:0.875rem;font-weight:500;color:var(--silver);}
+
+    /* PROJECT */
+    .proj-card{background:var(--bg3);border:1px solid var(--border2);
+      border-radius:20px;overflow:hidden;transition:all 0.4s;}
+    .proj-card:hover{border-color:var(--border);box-shadow:0 40px 80px rgba(0,0,0,0.4);}
+    .proj-top{padding:48px;
+      background:linear-gradient(135deg,rgba(201,168,76,0.05),transparent);
+      border-bottom:1px solid var(--border2);
+      display:flex;align-items:flex-start;justify-content:space-between;gap:24px;}
+    .proj-badge{display:inline-flex;align-items:center;gap:8px;
+      background:rgba(201,168,76,0.1);border:1px solid var(--border);
+      border-radius:6px;padding:5px 14px;font-size:0.75rem;color:var(--gold);
+      font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
+    .proj-title{font-family:'Playfair Display',serif;font-size:2.4rem;
+      font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;}
+    .proj-sub{color:var(--gold);font-weight:500;font-size:0.95rem;}
+    .proj-gh{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;
+      border-radius:8px;background:transparent;border:1px solid var(--border2);
+      color:var(--silver);font-size:0.85rem;font-weight:500;
+      text-decoration:none;transition:all 0.2s;white-space:nowrap;flex-shrink:0;}
+    .proj-gh:hover{border-color:var(--gold);color:var(--gold);}
+    .proj-body{padding:48px;}
+    .proj-desc{color:var(--silver);line-height:1.9;font-size:1.05rem;
+      font-weight:300;margin-bottom:40px;max-width:760px;}
+    .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px;}
+    .proj-feat{background:var(--bg2);border:1px solid var(--border2);
+      border-radius:10px;padding:18px;transition:border-color 0.2s;}
+    .proj-feat:hover{border-color:var(--border);}
+    .proj-feat-icon{font-size:1.1rem;margin-bottom:8px;}
+    .proj-feat-text{font-size:0.8rem;color:var(--silver);line-height:1.5;}
+    .proj-stack{display:flex;gap:8px;flex-wrap:wrap;}
+    .stack-tag{padding:5px 14px;border-radius:4px;font-size:0.75rem;
+      font-weight:500;letter-spacing:0.5px;
+      background:rgba(255,255,255,0.03);border:1px solid var(--border2);color:var(--silver);}
+
+    /* EDUCATION */
+    .edu-bg{background:var(--bg2);}
+    .edu-card{background:var(--bg3);border:1px solid var(--border2);
+      border-radius:16px;padding:44px 48px;
+      display:flex;align-items:center;gap:36px;transition:all 0.3s;}
+    .edu-card:hover{border-color:var(--border);transform:translateY(-4px);}
+    .edu-icon{width:76px;height:76px;border-radius:16px;flex-shrink:0;
+      background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));
+      border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;font-size:2rem;}
+    .edu-degree{font-family:'Playfair Display',serif;font-size:1.4rem;
+      font-weight:700;margin-bottom:6px;}
+    .edu-college{color:var(--gold);font-weight:500;margin-bottom:6px;font-size:0.95rem;}
+    .edu-info{color:var(--muted);font-size:0.875rem;}
+    .edu-batch{margin-left:auto;flex-shrink:0;font-family:'Playfair Display',serif;
+      font-size:1.1rem;font-weight:700;color:var(--gold);
+      background:rgba(201,168,76,0.08);border:1px solid var(--border);
+      border-radius:8px;padding:10px 24px;}
+
+    /* CONTACT */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+    .contact-intro{font-size:1.05rem;color:var(--silver);line-height:1.9;
+      font-weight:300;margin-bottom:32px;}
+    .contact-intro strong{color:var(--white);font-weight:500;}
+    .contact-items{display:flex;flex-direction:column;gap:12px;}
+    .c-item{display:flex;align-items:center;gap:18px;padding:18px 24px;
+      border-radius:12px;background:var(--bg3);border:1px solid var(--border2);
+      text-decoration:none;color:var(--white);transition:all 0.3s;}
+    .c-item:hover{border-color:var(--border);transform:translateX(8px);}
+    .c-icon{width:44px;height:44px;border-radius:10px;display:flex;
+      align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
+      background:rgba(201,168,76,0.08);border:1px solid var(--border);}
+    .c-label{font-size:0.7rem;color:var(--muted);letter-spacing:1px;
+      text-transform:uppercase;margin-bottom:3px;}
+    .c-value{font-size:0.88rem;font-weight:500;}
+    .c-arrow{margin-left:auto;color:var(--muted);transition:color 0.2s;}
+    .c-item:hover .c-arrow{color:var(--gold);}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border2);padding:36px 80px;
+      display:flex;align-items:center;justify-content:space-between;
+      position:relative;z-index:1;}
+    .foot-name{font-family:'Playfair Display',serif;font-weight:700;
+      font-size:1rem;color:var(--white);letter-spacing:1px;}
+    .foot-copy{color:var(--muted);font-size:0.8rem;}
+
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    .reveal{opacity:0;transform:translateY(24px);
+      transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:0.15s;} .d2{transition-delay:0.3s;}
+
+    @media(max-width:1024px){
+      nav{padding:0 32px;}
+      .hero{padding:120px 32px 80px;}
+      .hero-scroll{left:32px;}
+      .wrap{padding:80px 32px;}
+      .about-grid,.contact-grid{grid-template-columns:1fr;gap:48px;}
+      .skills-grid{grid-template-columns:repeat(3,1fr);}
+      .proj-top{flex-direction:column;}
+      .proj-grid{grid-template-columns:1fr 1fr;}
+      footer{padding:28px 32px;}
+    }
+    @media(max-width:640px){
+      .nav-links{display:none;}
+      .hero-name{font-size:2.8rem;}
+      .skills-grid{grid-template-columns:repeat(2,1fr);}
+      .proj-grid{grid-template-columns:1fr;}
+      .proj-top,.proj-body{padding:28px;}
+      .edu-card{flex-direction:column;align-items:flex-start;}
+      .edu-batch{margin-left:0;}
+    }
+  </style>
+</head>
+<body>
+<div class="bg-noise"></div>
+
+<nav>
+  <div class="nav-name">SHREE HARINI <span>VELU S</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero">
+    <p class="hero-eyebrow">Portfolio · Web Developer</p>
+    <h1 class="hero-name">
+      Shree Harini<br/>
+      <span class="outline">Velu S</span>
+    </h1>
+    <p class="hero-tagline">
+      A <strong>B.Tech Information Technology</strong> student at Panimalar Engineering College, Chennai.
+      I enjoy exploring web development and building things that actually work in the real world.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-gold">See My Work</a>
+      <a href="#contact" class="btn-outline">Contact Me</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll down</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <p class="sec-tag reveal">About</p>
+    <h2 class="sec-title reveal">A little about <span>me</span></h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm <strong>Shree Harini Velu S</strong>, an Information Technology student at Panimalar Engineering College, Chennai. I got into web development while working on real projects — and it stuck.</p>
+        <p>I like building things from scratch. Whether it's a frontend, a backend, or putting a full-stack application together — I enjoy figuring out how everything connects and making it actually work.</p>
+        <p>My most recent project, <strong>ShareCircle</strong>, is a web app where people in a community can borrow and lend items with each other. It taught me a lot about building for real users — security, database design, and making the experience feel smooth.</p>
+      </div>
+      <div class="about-cards reveal d1">
+        <div class="info-card">
+          <div class="info-icon">🎓</div>
+          <div><div class="info-label">Degree</div><div class="info-value">B.Tech Information Technology</div></div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🏫</div>
+          <div><div class="info-label">College</div><div class="info-value">Panimalar Engineering College</div></div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div><div class="info-label">Location</div><div class="info-value">Chennai, Tamil Nadu</div></div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📅</div>
+          <div><div class="info-label">Batch</div><div class="info-value">2023 — 2027</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-bg">
+  <div class="wrap">
+    <p class="sec-tag reveal">Skills</p>
+    <h2 class="sec-title reveal">What I work <span>with</span></h2>
+    <div class="skills-grid reveal">
+      <div class="skill-item"><div class="skill-emoji">🌐</div><div class="skill-name">HTML</div></div>
+      <div class="skill-item"><div class="skill-emoji">🎨</div><div class="skill-name">CSS</div></div>
+      <div class="skill-item"><div class="skill-emoji">⚡</div><div class="skill-name">JavaScript</div></div>
+      <div class="skill-item"><div class="skill-emoji">⚛️</div><div class="skill-name">React</div></div>
+      <div class="skill-item"><div class="skill-emoji">🔥</div><div class="skill-name">Firebase</div></div>
+      <div class="skill-item"><div class="skill-emoji">☕</div><div class="skill-name">Java</div></div>
+      <div class="skill-item"><div class="skill-emoji">🗄️</div><div class="skill-name">SQL</div></div>
+      <div class="skill-item"><div class="skill-emoji">🖼️</div><div class="skill-name">UI/UX</div></div>
+      <div class="skill-item"><div class="skill-emoji">💻</div><div class="skill-name">VS Code</div></div>
+      <div class="skill-item"><div class="skill-emoji">🎭</div><div class="skill-name">Canva</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <p class="sec-tag reveal">Projects</p>
+    <h2 class="sec-title reveal">Things I've <span>built</span></h2>
+    <div class="proj-card reveal">
+      <div class="proj-top">
+        <div>
+          <div class="proj-badge">Featured Project</div>
+          <h3 class="proj-title">ShareCircle</h3>
+          <p class="proj-sub">Community Borrowing & Lending Web App</p>
+        </div>
+        <a href="https://github.com/SShreeHariniVelu/ShareCircle" target="_blank" class="proj-gh">View on GitHub →</a>
+      </div>
+      <div class="proj-body">
+        <p class="proj-desc">
+          ShareCircle is a web application that helps people in a community share items they aren't using.
+          Instead of buying something you only need once, you can borrow it from someone nearby.
+          The app handles the entire flow — listing items, sending borrow requests, approvals, returns and notifications.
+          Built with real-world security and usability in mind.
+        </p>
+        <div class="proj-grid">
+          <div class="proj-feat"><div class="proj-feat-icon">🔐</div><div class="proj-feat-text">Firebase authentication with Firestore security rules</div></div>
+          <div class="proj-feat"><div class="proj-feat-icon">📦</div><div class="proj-feat-text">Full borrow, approve, return and confirm flow</div></div>
+          <div class="proj-feat"><div class="proj-feat-icon">🔔</div><div class="proj-feat-text">Real-time alerts and notification system</div></div>
+          <div class="proj-feat"><div class="proj-feat-icon">👤</div><div class="proj-feat-text">User profiles with badges and trust score</div></div>
+          <div class="proj-feat"><div class="proj-feat-icon">🛡️</div><div class="proj-feat-text">XSS protection, rate limiting and duplicate prevention</div></div>
+          <div class="proj-feat"><div class="proj-feat-icon">📱</div><div class="proj-feat-text">Responsive design with a premium dark UI</div></div>
+        </div>
+        <div class="proj-stack">
+          <span class="stack-tag">HTML</span>
+          <span class="stack-tag">CSS</span>
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">Firebase</span>
+          <span class="stack-tag">Firestore</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Express.js</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="edu-bg">
+  <div class="wrap">
+    <p class="sec-tag reveal">Education</p>
+    <h2 class="sec-title reveal">Where I <span>study</span></h2>
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">B.Tech Information Technology</div>
+        <div class="edu-college">Panimalar Engineering College</div>
+        <div class="edu-info">Chennai, Tamil Nadu, India</div>
+      </div>
+      <div class="edu-batch">2023 — 2027</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <p class="sec-tag reveal">Contact</p>
+    <h2 class="sec-title reveal">Let's <span>connect</span></h2>
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-intro">
+          I'm open to <strong>internship opportunities</strong>, collaborations and interesting projects.
+          If you'd like to connect or have something in mind, feel free to reach out — I'd be happy to talk!
+        </p>
+        <a href="mailto:s.shreeharinivelu@gmail.com" class="btn-gold">Send a Message</a>
+      </div>
+      <div class="contact-items reveal d1">
+        <a href="mailto:s.shreeharinivelu@gmail.com" class="c-item">
+          <div class="c-icon">📧</div>
+          <div><div class="c-label">Email</div><div class="c-value">s.shreeharinivelu@gmail.com</div></div>
+          <div class="c-arrow">→</div>
+        </a>
+        <a href="tel:+918870591748" class="c-item">
+          <div class="c-icon">📱</div>
+          <div><div class="c-label">Phone</div><div class="c-value">+91 8870591748</div></div>
+          <div class="c-arrow">→</div>
+        </a>
+        <a href="https://linkedin.com/in/shree-harini-velu-s-b86860328" target="_blank" class="c-item">
+          <div class="c-icon">💼</div>
+          <div><div class="c-label">LinkedIn</div><div class="c-value">Shree Harini Velu S</div></div>
+          <div class="c-arrow">→</div>
+        </a>
+        <a href="https://github.com/SShreeHariniVelu" target="_blank" class="c-item">
+          <div class="c-icon">🐙</div>
+          <div><div class="c-label">GitHub</div><div class="c-value">SShreeHariniVelu</div></div>
+          <div class="c-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-name">SHREE HARINI VELU S</div>
+  <div class="foot-copy">© 2024 · All rights reserved</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
